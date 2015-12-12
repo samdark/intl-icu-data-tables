@@ -1,3 +1,7 @@
+<?php
+$this->title = 'About the project - PHP intl extension, ICU data tables';
+?>
+
 <h1>About the project</h1>
 
 <p>The project was created by <a href="http://github.com/samdark">Alexander Makarov</a> to simplify checking out
@@ -24,5 +28,5 @@ wrapper around intl allowing usage of named parameters in all possible cases.</p
 
 <h2>Source code, issue and pull requests</h2>
 
-<p>Source code is [available at GitHub](https://github.com/samdark/intl-icu-data-tables). Feel free to submit issues
+<p>Source code is <a href="https://github.com/samdark/intl-icu-data-tables">available at GitHub</a>. Feel free to submit issues
    and pull requests.</p>
