@@ -22,6 +22,7 @@ wrapper around intl allowing usage of named parameters in all possible cases.</p
 
 <p>If you're not using Yii, try positional placeholders such as <code>{0}</code> instead.</p>
 
-<h2>Contact info</h2>
+<h2>Source code, issue and pull requests</h2>
 
-<p>You can contact me via email: <a href="mailto:sam@rmcreative.ru">sam@rmcreative.ru</a></p>
+<p>Source code is [available at GitHub](https://github.com/samdark/intl-icu-data-tables). Feel free to submit issues
+   and pull requests.</p>
