@@ -21,3 +21,27 @@ serve as info source for using with [Yii 2.0 framework](http://www.yiiframework.
 intl allowing usage of named parameters in all possible cases.
 
 If you're not using Yii, try positional placeholders such as `{0}` instead.
+
+DIRECTORY STRUCTURE
+-------------------
+
+    assets/             contains assets definition
+    config/             contains application configurations
+    controllers/        contains Web controller classes
+    runtime/            contains files generated during runtime
+    vendor/             contains dependent 3rd-party packages
+    views/              contains view files for the Web application
+    web/                contains the entry script and Web resources
+
+REQUIREMENTS
+------------
+
+The minimum requirement by this project that your Web server supports PHP 5.4.0.
+
+INSTALLATION
+------------
+
+1. Download zip.
+2. Copy `/config/csrf_key.php.example` to `/config/csrf_key.php`. Paste validation key there.
+3. Run `composer global require "fxp/composer-asset-plugin:~1.1.0" && composer install`.
+4. Configure your webserver to point to `/web`.
