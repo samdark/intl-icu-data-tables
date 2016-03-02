@@ -32,7 +32,12 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'tables' => 'site/index',
+                'general/<locale:[\w_-]+>' => 'site/index',
+                'general' => 'site/index',
+
+                '<action:[\w-]+>/<locale:[\w_-]+>' => 'site/<action>',
+                '<action:[\w-]+>' => 'site/<action>',
+
                 'suggestLocale' => 'site/suggest-locale',
             ],
         ],

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\NumberFormatterInfo;
 use Yii;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
@@ -26,6 +27,17 @@ class SiteController extends Controller
 
         return $this->render('index', [
             'locale' => $locale,
+        ]);
+    }
+
+    public function actionMessageFormatting($locale = '')
+    {
+        if ($locale) {
+            $locale = \Locale::canonicalize($locale);
+        }
+
+        return $this->render('message', [
+            'locale' => $locale,
             'spelloutRules' => $this->getRules($locale, \NumberFormatter::SPELLOUT),
             'ordinalRules' => $this->getRules($locale, \NumberFormatter::ORDINAL),
             'durationRules' => $this->getRules($locale, \NumberFormatter::DURATION),
@@ -35,6 +47,62 @@ class SiteController extends Controller
             'pluralOrdinalExample' => $this->getPluralOrdinalExample($locale),
         ]);
     }
+
+    public function actionNumberFormatting($locale = '')
+    {
+        if ($locale) {
+            $locale = \Locale::canonicalize($locale);
+        }
+
+        return $this->render('number', [
+            'locale' => $locale,
+        ]);
+    }
+
+    public function actionCurrencyData($locale = '')
+    {
+        if ($locale) {
+            $locale = \Locale::canonicalize($locale);
+        }
+
+        return $this->render('currency-data', [
+            'locale' => $locale,
+        ]);
+    }
+
+    public function actionLanguageData($locale = '')
+    {
+        if ($locale) {
+            $locale = \Locale::canonicalize($locale);
+        }
+
+        return $this->render('language-data', [
+            'locale' => $locale,
+        ]);
+    }
+
+    public function actionRegionData($locale = '')
+    {
+        if ($locale) {
+            $locale = \Locale::canonicalize($locale);
+        }
+
+        return $this->render('region-data', [
+            'locale' => $locale,
+        ]);
+    }
+
+    public function actionZoneData($locale = '')
+    {
+        if ($locale) {
+            $locale = \Locale::canonicalize($locale);
+        }
+
+        return $this->render('zone-data', [
+            'locale' => $locale,
+        ]);
+    }
+
 
     private function getRules($locale, $type)
     {
