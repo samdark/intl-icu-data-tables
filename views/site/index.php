@@ -1,185 +1,58 @@
 <?php
-/* @var $this yii\web\View */
-/* @var $query string */
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\jui\AutoComplete;
+use app\models\ResourceInfo;
+use yii\bootstrap\Html;
+use yii\helpers\Inflector;
 
-$this->title = '';
-if ($locale) {
-	$this->title = \Locale::getDisplayName($locale, Yii::$app->language) . ', '. Html::encode($locale) . ' - ';
-}
-$this->title .= 'PHP intl extension, ICU data tables';
+/* @var $this yii\web\View */
+
+/* @var $locale string */
+/* @var $query string */
+/* @var $title string */
+
+echo $this->render('_locale', ['locale' => $locale, 'title' => '']);
+
+if ($locale):
 ?>
 
-<?= Html::beginForm(['site/index'], 'get', ['class' => 'form-horizontal']) ?>
-<div class="input-group">
-    <?= AutoComplete::widget([
-        'name' => 'locale',
-        'value' => $locale,
-        'options' => ['class' => 'form-control', 'placeholder' => 'Enter locale code such as "en" or "en_US"', 'autofocus' => true],
-        'clientOptions' => [
-            'source' => Url::toRoute(['site/suggest-locale']),
-        ],
-    ]) ?>
-    <span class="input-group-btn">
-        <?= Html::submitButton('Find', ['class' => 'btn btn-primary']) ?>
-    </span>
-</div>
-<?= Html::endForm() ?>
-
-<?php if ($locale): ?>
-
-<h1><?= Html::encode(\Locale::getDisplayName($locale, Yii::$app->language)) ?> <small><?= Html::encode($locale) ?></small></h1>
-<small>Based on PHP intl data: ICU <?= INTL_ICU_VERSION ?>. Data <?= INTL_ICU_DATA_VERSION ?>.</small>
-
-<h2 id="plural-rules">Plural Rules <small><a href="#plural-rules">#</a></small></h2>
-
-<h3 id="plural-rules-cardinal">Cardinal <small>plural <a href="#plural-rules-cardinal">#</a></small></h3>
-
-<?php if ($pluralCardinalRules): ?>
-    <table class="table table-hover">
-        <tr>
-            <th>Category</th>
-            <th>Rules</th>
-        </tr>
-    <?php foreach ($pluralCardinalRules as $category => $rules): ?>
-        <tr>
-            <td><?= Html::encode($category) ?></td>
-            <td><?= Html::encode($rules) ?></td>
-        </tr>
-    <?php endforeach ?>
-        <tr>
-            <td>other</td>
-            <td>Everything else</td>
-        </tr>
-    </table>
-
-    <pre><code><?= Html::encode($pluralCardinalExample[0])?></code></pre>
-
-    <ul>
-        <?php foreach ($pluralCardinalExample[1] as $n): ?>
-            <li><?= Yii::$app->i18n->format($pluralCardinalExample[0], ['n' => $n], $locale) ?></li>
-        <?php endforeach ?>
-        <li><?= Yii::$app->i18n->format($pluralCardinalExample[0], ['n' => 0.12], $locale) ?></li>
-    </ul>
-<?php else: ?>
-    Not supported.
-<?php endif ?>
-
-<h3 id="plural-rules-ordinal">Ordinal <small>selectordinal <a href="#plural-rules-ordinal">#</a></small></h3>
-
-<?php if ($pluralOrdinalRules): ?>
-    <table class="table table-hover">
-        <tr>
-            <th>Category</th>
-            <th>Rules</th>
-        </tr>
-    <?php foreach ($pluralOrdinalRules as $category => $rules): ?>
-        <tr>
-            <td><?= Html::encode($category) ?></td>
-            <td><?= Html::encode($rules) ?></td>
-        </tr>
-    <?php endforeach ?>
-        <tr>
-            <td>other</td>
-            <td>Everything else</td>
-        </tr>
-    </table>
-
-    <pre><code><?= Html::encode($pluralOrdinalExample[0])?></code></pre>
-
-    <ul>
-        <?php foreach ($pluralOrdinalExample[1] as $n): ?>
-            <li><?= Yii::$app->i18n->format($pluralOrdinalExample[0], ['n' => $n], $locale) ?></li>
-        <?php endforeach ?>
-        <li><?= Yii::$app->i18n->format($pluralOrdinalExample[0], ['n' => 0.12], $locale) ?></li>
-    </ul>
-<?php else: ?>
-    Not supported.
-<?php endif ?>
-
-<h2 id="numbering-schemas">Numbering schemas <small><a href="#numbering-schemas">#</a></small></h2>
-
-<h3 id="numbering-schemas-spellout">Spellout <small><a href="#numbering-schemas-spellout">#</a></small></h3>
+<h2 id="general-information">General Information <small><a href="#general-information">#</a></small></h2>
 
 <table class="table table-hover">
     <tr>
-        <th>Schema</th>
-        <th>Example</th>
-        <th>Result</th>
+        <th></th>
+        <th>Code</th>
+        <th>Name (<?= Html::encode(Yii::$app->language) ?>)</th>
+        <th>Name (<?= Html::encode($locale) ?>)</th>
     </tr>
-<?php foreach ($spelloutRules as $rule => $isDefault): ?>
     <tr>
-        <td>
-    <?php if ($isDefault): ?>
-        <strong><?= Html::encode($rule) ?> (default)</strong>
-    <?php else: ?>
-        <?= Html::encode($rule) ?>
-    <?php endif ?>
-        </td>
-        <td>
-            <pre><code>{n, spellout,<?= Html::encode($rule) ?>}</code></pre>
-        </td>
-        <td>
-            <?= Yii::$app->i18n->format('{n, spellout,' . $rule . '}', ['n' => 471], $locale) ?>
-        </td>
+        <th>Language</th>
+        <td><?= Locale::getPrimaryLanguage($locale) ?: '<em>none</em>' ?></td>
+        <td><?= Locale::getDisplayLanguage($locale, Yii::$app->language) ?: '<em>none</em>' ?></td>
+        <td><?= Locale::getDisplayLanguage($locale, $locale) ?: '<em>none</em>' ?></td>
     </tr>
-<?php endforeach ?>
+    <tr>
+        <th>Region</th>
+        <td><?= Locale::getRegion($locale) ?: '<em>none</em>' ?></td>
+        <td><?= Locale::getDisplayRegion($locale, Yii::$app->language) ?: '<em>none</em>' ?></td>
+        <td><?= Locale::getDisplayRegion($locale, $locale) ?: '<em>none</em>' ?></td>
+    </tr>
+    <tr>
+        <th>Script</th>
+        <td><?= Locale::getScript($locale) ?: '<em>none</em>' ?></td>
+        <td><?= Locale::getDisplayScript($locale, Yii::$app->language) ?: '<em>none</em>' ?></td>
+        <td><?= Locale::getDisplayScript($locale, $locale) ?: '<em>none</em>' ?></td>
+    </tr>
+    <tr>
+        <th>Default Currency</th>
+        <?php $defaultCurrency = \app\models\NumberFormatterInfo::getDefaultCurrency($locale); ?>
+        <td><?= $defaultCurrency ? $defaultCurrency . ' (' . \app\models\NumberFormatterInfo::getDefaultCurrencySymbol($locale) . ')' : '<em>none</em>' ?></td>
+        <td><?= $defaultCurrency ? ResourceInfo::getCurrencyName($defaultCurrency, Yii::$app->language) : '<em>none</em>' ?></td>
+        <td><?= $defaultCurrency ? ResourceInfo::getCurrencyName($defaultCurrency, $locale) : '<em>none</em>' ?></td>
+    </tr>
 </table>
 
-<h3 id="numbering-schemas-ordinal">Ordinal <small><a href="#numbering-schemas-ordinal">#</a></small></h3>
 
-<table class="table table-hover">
-    <tr>
-        <th>Schema</th>
-        <th>Example</th>
-        <th>Result</th>
-    </tr>
-<?php foreach ($ordinalRules as $rule => $isDefault): ?>
-    <tr>
-        <td>
-    <?php if ($isDefault): ?>
-        <strong><?= Html::encode($rule) ?> (default)</strong>
-    <?php else: ?>
-        <?= Html::encode($rule) ?>
-    <?php endif ?>
-        </td>
-            <td>
-                <pre><code>{n, ordinal,<?= Html::encode($rule) ?>}</code></pre>
-            </td>
-            <td>
-                <?= Yii::$app->i18n->format('{n, ordinal,' . $rule . '}', ['n' => 471], $locale) ?>
-            </td>
-        </tr>
-<?php endforeach ?>
-</table>
+<h2 id="icu-data-default">ICU Data <small><a href="#icu-data-default">#</a></small></h2>
 
-<h3 id="numbering-schemas-duration">Duration <small><a href="#numbering-schemas-duration">#</a></small></h3>
+<?= $this->render('_icuData', ['icuData' => ResourceInfo::defaultData($locale)]) ?>
 
-<table class="table table-hover">
-    <tr>
-        <th>Schema</th>
-        <th>Example</th>
-        <th>Result</th>
-    </tr>
-<?php foreach ($durationRules as $rule => $isDefault): ?>
-    <tr>
-        <td>
-    <?php if ($isDefault): ?>
-        <strong><?= Html::encode($rule) ?> (default)</strong>
-    <?php else: ?>
-        <?= Html::encode($rule) ?>
-    <?php endif ?>
-        </td>
-        <td>
-            <pre><code>{n, duration,<?= Html::encode($rule) ?>}</code></pre>
-        </td>
-        <td>
-            <?= Yii::$app->i18n->format('{n, duration,' . $rule . '}', ['n' => 471227], $locale) ?>
-        </td>
-    </tr>
-<?php endforeach ?>
-</table>
-
-<?php endif ?>
+<?php endif; ?>
