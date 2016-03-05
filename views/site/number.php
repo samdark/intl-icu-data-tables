@@ -42,7 +42,7 @@ if ($locale):
     <?php foreach(NumberFormatterInfo::getPatternTable($locale) as $type => $pattern): ?>
         <tr>
         <th><?= NumberFormatterInfo::$types[$type][0] ?><br /><small><?= NumberFormatterInfo::$types[$type][1] ?></small></th>
-        <td><code><?= $pattern ?></code></td>
+        <td><code><?= str_replace(';', ';<br>', $pattern) ?></code></td>
         </tr>
     <?php endforeach; ?>
 </table>
