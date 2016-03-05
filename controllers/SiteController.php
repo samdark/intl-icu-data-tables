@@ -2,14 +2,15 @@
 
 namespace app\controllers;
 
-use app\models\NumberFormatterInfo;
 use Yii;
-use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\Response;
 
 class SiteController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
     public function actions()
     {
         return [

@@ -1,7 +1,6 @@
 <?php
 use app\models\ResourceInfo;
 use yii\bootstrap\Html;
-use yii\helpers\Inflector;
 
 /* @var $this yii\web\View */
 

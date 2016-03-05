@@ -10,11 +10,19 @@ $this->title = 'About the project - PHP intl extension, ICU data tables';
 
 <p>Instead you can enter locale code and get all the info for just that locale right away.</p>
 
+<p>It was then improved by <a href="https://github.com/cebe">Carsten Brandt</a> to display more ICU data.</p>
+
 <h2>What's currently displayed:</h2>
 
 <ul>
+    <li>General locale info.</li>
     <li>Plural rules. Also <a href="http://www.unicode.org/cldr/charts/27/supplemental/language_plural_rules.html">available via CLDR website</a>.</li>
     <li>Numbering schemas. Not available anywhere but ICU resource sources which aren't too user friendly to read.</li>
+    <li>Number formatting rules and data.</li>
+    <li>Currency data.</li>
+    <li>Language data.</li>
+    <li>Region data.</li>
+    <li>Zone data.</li>
 </ul>
 
 <h2>Are examples broken?</h2>

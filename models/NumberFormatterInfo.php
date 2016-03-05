@@ -1,19 +1,20 @@
 <?php
-/**
- *
- *
- * @author Carsten Brandt <mail@cebe.cc>
- */
-
 namespace app\models;
-
 
 use NumberFormatter;
 use yii\base\Object;
 
+/**
+ * NumberFormatterInfo provides info for Number Formatting tab
+ *
+ * @author Carsten Brandt <mail@cebe.cc>
+ */
 class NumberFormatterInfo extends Object
 {
-    // http://php.net/manual/en/class.numberformatter.php#intl.numberformatter-constants
+    /**
+     * @var array
+     * @see http://php.net/manual/en/class.numberformatter.php#intl.numberformatter-constants
+     */
     public static $types = [
 //        NumberFormatter::PATTERN_DECIMAL => ['PATTERN_DECIMAL', 'Decimal format defined by pattern.'],
 //        NumberFormatter::PATTERN_RULEBASED => ['PATTERN_RULEBASED', 'Rule-based format defined by pattern.'],
@@ -37,7 +38,6 @@ class NumberFormatterInfo extends Object
     ];
 
     public static $attributes = [
-
         NumberFormatter::PARSE_INT_ONLY => ['PARSE_INT_ONLY', 'Parse integers only.'],
         NumberFormatter::GROUPING_USED => ['GROUPING_USED', 'Use grouping separator.'],
         NumberFormatter::DECIMAL_ALWAYS_SHOWN => ['DECIMAL_ALWAYS_SHOWN', 'Always show decimal point.'],
@@ -66,8 +66,14 @@ class NumberFormatterInfo extends Object
         NumberFormatter::NEGATIVE_SUFFIX => ['NEGATIVE_SUFFIX', 'Negative suffix.'],
         NumberFormatter::PADDING_CHARACTER => ['PADDING_CHARACTER', 'The character used to pad to the format width.'],
         NumberFormatter::CURRENCY_CODE => ['CURRENCY_CODE', 'The ISO currency code.'],
-        NumberFormatter::DEFAULT_RULESET => ['DEFAULT_RULESET', 'The default rule set. This is only available with rule-based formatters.'],
-        NumberFormatter::PUBLIC_RULESETS => ['PUBLIC_RULESETS', 'The public rule sets.This is only available with rule-based formatters. This is a read-only attribute. The public rulesets are returned as a single string, with each ruleset name delimited by \';\' (semicolon).'],
+        NumberFormatter::DEFAULT_RULESET => [
+            'DEFAULT_RULESET',
+            'The default rule set. This is only available with rule-based formatters.'
+        ],
+        NumberFormatter::PUBLIC_RULESETS => [
+            'PUBLIC_RULESETS',
+            'The public rule sets.This is only available with rule-based formatters. This is a read-only attribute. The public rulesets are returned as a single string, with each ruleset name delimited by \';\' (semicolon).'
+        ],
     ];
 
     public static $symbols = [
@@ -88,15 +94,18 @@ class NumberFormatterInfo extends Object
         NumberFormatter::INFINITY_SYMBOL => ['INFINITY_SYMBOL', 'Infinity symbol.'],
         NumberFormatter::NAN_SYMBOL => ['NAN_SYMBOL', 'Not-a-number symbol.'],
         NumberFormatter::SIGNIFICANT_DIGIT_SYMBOL => ['SIGNIFICANT_DIGIT_SYMBOL', 'Significant digit symbol.'],
-        NumberFormatter::MONETARY_GROUPING_SEPARATOR_SYMBOL => ['MONETARY_GROUPING_SEPARATOR_SYMBOL', 'The monetary grouping separator. '],
+        NumberFormatter::MONETARY_GROUPING_SEPARATOR_SYMBOL => [
+            'MONETARY_GROUPING_SEPARATOR_SYMBOL',
+            'The monetary grouping separator. '
+        ],
     ];
 
     public static function getSymbolTable($locale)
     {
         $result = [];
-        foreach(static::$types as $type => $typeDetails) {
+        foreach (static::$types as $type => $typeDetails) {
             $nf = new NumberFormatter($locale, $type);
-            foreach(static::$symbols as $symbol => $symbolDetails) {
+            foreach (static::$symbols as $symbol => $symbolDetails) {
                 $result[$symbol][$type] = $nf->getSymbol($symbol);
             }
         }
@@ -106,7 +115,7 @@ class NumberFormatterInfo extends Object
     public static function getPatternTable($locale)
     {
         $result = [];
-        foreach(static::$types as $type => $typeDetails) {
+        foreach (static::$types as $type => $typeDetails) {
             $nf = new NumberFormatter($locale, $type);
             $result[$type] = $nf->getPattern();
         }
@@ -124,6 +133,4 @@ class NumberFormatterInfo extends Object
         $nf = new NumberFormatter($locale, NumberFormatter::CURRENCY);
         return $nf->getSymbol(NumberFormatter::CURRENCY_SYMBOL);
     }
-
-
 }

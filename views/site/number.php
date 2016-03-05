@@ -1,6 +1,5 @@
 <?php
 use app\models\NumberFormatterInfo;
-use yii\bootstrap\Html;
 
 /* @var $this yii\web\View */
 

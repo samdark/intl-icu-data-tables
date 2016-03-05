@@ -1,18 +1,13 @@
 <?php
-/**
- *
- *
- * @author Carsten Brandt <mail@cebe.cc>
- */
-
 namespace app\models;
 
-
-use NumberFormatter;
 use ResourceBundle;
 use yii\base\Object;
-use yii\helpers\ArrayHelper;
 
+/**
+ * ResourceInfo provides various info about resource bundles
+ * @author Carsten Brandt <mail@cebe.cc>
+ */
 class ResourceInfo extends Object
 {
     public static function defaultData($locale)
@@ -48,7 +43,7 @@ class ResourceInfo extends Object
     private static function dumpIntlResource($r)
     {
         $result = [];
-        foreach($r as $k => $v) {
+        foreach ($r as $k => $v) {
             if ($v instanceof ResourceBundle) {
                 $result[$k] = self::dumpIntlResource($v);
             } else {
@@ -62,6 +57,4 @@ class ResourceInfo extends Object
     {
         return ResourceBundle::create($locale, 'ICUDATA-curr')->get('Currencies')->get($iso)[1];
     }
-
-
 }
