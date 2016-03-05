@@ -32,6 +32,9 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                // compatibility with old URLs
+                'tables' => 'site/message-formatting',
+
                 'general/<locale:[\w_-]+>' => 'site/index',
                 'general' => 'site/index',
 
