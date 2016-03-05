@@ -2,6 +2,7 @@
 
 use yii\bootstrap\Html;
 use yii\helpers\Inflector;
+use yii\helpers\VarDumper;
 
 /* @var $this yii\web\View */
 /* @var $icuData array */
@@ -15,6 +16,6 @@ foreach($icuData as $key => $data) {
     $id = 'icu-data-' . Inflector::slug($key);
     echo "<h3 id=\"$id\">" . Html::encode($key) . " <small><a href=\"#$id\">#</a></small></h3>";
     echo '<pre>';
-    print_r($data);
+    VarDumper::dump($data, 10, true);
     echo '</pre>';
 }
