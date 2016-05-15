@@ -40,17 +40,16 @@ class ResourceInfo extends Object
         return self::dumpIntlResource($r);
     }
 
-    private static function dumpIntlResource($r)
+    private static function dumpIntlResource($resourceBundle)
     {
-        $result = [];
-        foreach ($r as $k => $v) {
-            if ($v instanceof ResourceBundle) {
-                $result[$k] = self::dumpIntlResource($v);
-            } else {
-                $result[$k] = $v;
-            }
-        }
-        return $result;
+        return self::recursiveIteratorToArray($resourceBundle);
+    }
+
+    private static function recursiveIteratorToArray($iterator)
+    {
+        return array_map(function ($item) {
+            return $item instanceof \ResourceBundle ? self::recursiveIteratorToArray($item) : $item;
+        }, iterator_to_array($iterator));
     }
 
     public static function getCurrencyName($iso, $locale)
