@@ -2,8 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\NormalizedPluralRule;
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class SiteController extends Controller
@@ -35,6 +37,10 @@ class SiteController extends Controller
     {
         if ($locale) {
             $locale = \Locale::canonicalize($locale);
+        }
+
+        if (!$this->localeExists($locale)) {
+            throw new NotFoundHttpException("Locale $locale was not found.");
         }
 
         return $this->render('message', [
@@ -130,13 +136,17 @@ class SiteController extends Controller
     {
         $n = 0;
         while ($n < 10000) {
-            if (eval('return ' . $condition . ';')) {
-                return $n;
+            try {
+                if (@eval('return ' . $condition . ';')) {
+                    return $n;
+                }
+            } catch (\ParseError $error) {
+                // ignore
             }
 
             $n++;
         }
-        return null;
+        return [];
     }
 
     private function getPluralCardinalRules($locale, $forPHP = false)
@@ -161,7 +171,7 @@ class SiteController extends Controller
         }
 
         return [
-            '{n, plural, '. implode(' ', $ruleStrings) .' other{# other}}',
+            '{n, plural, ' . implode(' ', $ruleStrings) . ' other{# other}}',
             $examples
         ];
     }
@@ -188,30 +198,9 @@ class SiteController extends Controller
         }
 
         return [
-            '{n, selectordinal, '. implode(' ', $ruleStrings) .' other{#-other}}',
+            '{n, selectordinal, ' . implode(' ', $ruleStrings) . ' other{#-other}}',
             $examples
         ];
-    }
-
-    private function normalizePluralRule($rules, $forPHP)
-    {
-        if ($forPHP) {
-            $replace = [
-                '~(?: |^)n(?: |$)~' => ' $n ',
-                '~mod~' => '%',
-                '~is not~' => '!=',
-                '~is~' => '==',
-                '~and~' => '&&',
-                '~or~' => '||',
-                '~(\|\| |&& |^)([^|&]+) not in (\d+)\.\.(\d+)~' => '\1!in_array(\2, range(\3, \4))',
-                '~(\|\| |&& |^)([^|&]+) (?:with)?in (\d+)\.\.(\d+)~' => '\1in_array(\2, range(\3, \4))',
-            ];
-
-            $rules = preg_replace(array_keys($replace), array_values($replace), $rules);
-        } else {
-            $rules = strtr($rules, ['mod' => '%', 'not in' => '!=', 'is not' => '!=', 'is' => '=', 'within' => '=', 'in' => '=']);
-        }
-        return $rules;
     }
 
     private function getPluralRules($locale, $type, $forPHP = false)
@@ -222,8 +211,14 @@ class SiteController extends Controller
         $data = $this->resourceBundleToArray($bundle['rules'][$key]);
 
         if ($data) {
+            unset($data['other']);
             foreach ($data as $category => $rules) {
-                $data[$category] = $this->normalizePluralRule($rules, $forPHP);
+                $normalizedRule = new NormalizedPluralRule($rules);
+                if ($forPHP) {
+                    $data[$category] = $normalizedRule->getPhp();
+                } else {
+                    $data[$category] = $normalizedRule->getDisplayString();
+                }
             }
         }
 
@@ -245,7 +240,9 @@ class SiteController extends Controller
     {
         if ($bundle === null) {
             return null;
-        } elseif (is_scalar($bundle)) {
+        }
+
+        if (is_scalar($bundle)) {
             return $bundle;
         }
 
@@ -274,5 +271,18 @@ class SiteController extends Controller
 
         Yii::$app->response->format = Response::FORMAT_JSON;
         return $result;
+    }
+
+    private function localeExists($term)
+    {
+        $locales = \ResourceBundle::getLocales('');
+
+        foreach ($locales as $locale) {
+            if (strcasecmp($term, $locale) === 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
