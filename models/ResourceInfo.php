@@ -34,6 +34,12 @@ class ResourceInfo extends Object
         return self::dumpIntlResource($r);
     }
 
+    public static function unitData($locale)
+    {
+        $r = ResourceBundle::create($locale, 'ICUDATA-unit');
+        return self::dumpIntlResource($r);
+    }
+
     public static function zoneData($locale)
     {
         $r = ResourceBundle::create($locale, 'ICUDATA-zone');

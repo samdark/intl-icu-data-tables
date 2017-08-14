@@ -44,10 +44,11 @@ $this->title .= 'PHP intl extension, ICU data tables';
         ['label' => 'General', 'url' => ['site/index', 'locale' => $locale], 'active' => $this->context->action->id === 'index'],
         ['label' => 'Message Formatting', 'url' => ['site/message-formatting', 'locale' => $locale], 'active' => $this->context->action->id === 'message-formatting'],
         ['label' => 'Number Formatting', 'url' => ['site/number-formatting', 'locale' => $locale], 'active' => $this->context->action->id === 'number-formatting'],
-        ['label' => 'Currency ICU Data', 'url' => ['site/currency-data', 'locale' => $locale], 'active' => $this->context->action->id === 'currency-data'],
-        ['label' => 'Language ICU Data', 'url' => ['site/language-data', 'locale' => $locale], 'active' => $this->context->action->id === 'language-data'],
-        ['label' => 'Region ICU Data', 'url' => ['site/region-data', 'locale' => $locale], 'active' => $this->context->action->id === 'region-data'],
-        ['label' => 'Zone ICU Data', 'url' => ['site/zone-data', 'locale' => $locale], 'active' => $this->context->action->id === 'zone-data'],
+        ['label' => 'ICU Currency Data', 'url' => ['site/currency-data', 'locale' => $locale], 'active' => $this->context->action->id === 'currency-data'],
+        ['label' => 'ICU Language Data', 'url' => ['site/language-data', 'locale' => $locale], 'active' => $this->context->action->id === 'language-data'],
+        ['label' => 'ICU Region Data', 'url' => ['site/region-data', 'locale' => $locale], 'active' => $this->context->action->id === 'region-data'],
+        ['label' => 'ICU Zone Data', 'url' => ['site/zone-data', 'locale' => $locale], 'active' => $this->context->action->id === 'zone-data'],
+        ['label' => 'ICU Unit Data', 'url' => ['site/unit-data', 'locale' => $locale], 'active' => $this->context->action->id === 'unit-data'],
     ]
 ]) ?>
 

@@ -99,6 +99,17 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionUnitData($locale = '')
+    {
+        if ($locale) {
+            $locale = \Locale::canonicalize($locale);
+        }
+
+        return $this->render('unit-data', [
+            'locale' => $locale,
+        ]);
+    }
+
     public function actionZoneData($locale = '')
     {
         if ($locale) {
