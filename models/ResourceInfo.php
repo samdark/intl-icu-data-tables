@@ -53,6 +53,10 @@ class ResourceInfo extends Object
 
     private static function recursiveIteratorToArray($iterator)
     {
+        if ($iterator === null) {
+            return [];
+        }
+
         return array_map(function ($item) {
             return $item instanceof \ResourceBundle ? self::recursiveIteratorToArray($item) : $item;
         }, iterator_to_array($iterator));
