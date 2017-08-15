@@ -23,6 +23,7 @@ $this->title = 'About the project - PHP intl extension, ICU data tables';
     <li>Language data.</li>
     <li>Region data.</li>
     <li>Zone data.</li>
+    <li>Unit data.</li>
 </ul>
 
 <h2>Are examples broken?</h2>

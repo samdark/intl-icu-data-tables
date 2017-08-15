@@ -10,8 +10,15 @@ Instead you can enter locale code and get all the info for just that locale righ
 
 ## What's currently displayed
 
+- General locale info.
 - Plural rules. Also [available via CLDR website](http://www.unicode.org/cldr/charts/27/supplemental/language_plural_rules.html).
 - Numbering schemas. Not available anywhere but ICU resource sources which aren't too user friendly to read.
+- Number formatting rules and data.
+- Currency data.
+- Language data.
+- Region data.
+- Zone data.
+- Unit data.
 
 ## Are examples broken?
 
