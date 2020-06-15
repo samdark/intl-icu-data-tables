@@ -2,13 +2,13 @@
 namespace app\models;
 
 use ResourceBundle;
-use yii\base\Object;
+use yii\base\BaseObject;
 
 /**
  * ResourceInfo provides various info about resource bundles
  * @author Carsten Brandt <mail@cebe.cc>
  */
-class ResourceInfo extends Object
+class ResourceInfo extends BaseObject
 {
     public static function defaultData($locale)
     {

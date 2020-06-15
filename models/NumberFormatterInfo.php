@@ -2,14 +2,14 @@
 namespace app\models;
 
 use NumberFormatter;
-use yii\base\Object;
+use yii\base\BaseObject;
 
 /**
  * NumberFormatterInfo provides info for Number Formatting tab
  *
  * @author Carsten Brandt <mail@cebe.cc>
  */
-class NumberFormatterInfo extends Object
+class NumberFormatterInfo extends BaseObject
 {
     /**
      * @var array
