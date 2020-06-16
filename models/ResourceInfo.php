@@ -64,6 +64,10 @@ class ResourceInfo extends BaseObject
 
     public static function getCurrencyName($iso, $locale)
     {
-        return ResourceBundle::create($locale, 'ICUDATA-curr')->get('Currencies')->get($iso)[1];
+        $currencyInfo = ResourceBundle::create($locale, 'ICUDATA-curr')->get('Currencies')->get($iso);
+        if ($currencyInfo === null) {
+            return '-';
+        }
+        return $currencyInfo[1];
     }
 }
