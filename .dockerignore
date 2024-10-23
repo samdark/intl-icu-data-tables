@@ -1,4 +1,5 @@
 .git
+.github
 .idea
 .gitignore
 .dockerignore
@@ -6,5 +7,6 @@
 /docker-compose.*
 /Makefile
 /README.md
+/readme.md
 /composer.json
 /composer.lock
