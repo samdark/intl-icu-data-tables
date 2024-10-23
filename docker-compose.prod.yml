@@ -1,0 +1,29 @@
+services:
+  webserver:
+    image: git.rmcreative.ru/web/intl.rmcreative.ru:latest
+    networks:
+      - caddy_public
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+      - runtime:/app/app/runtime
+    environment:
+      SERVER_NAME: ":80"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      labels:
+        caddy: intl.rmcreative.ru
+        caddy.reverse_proxy: "{{upstreams 80}}"
+
+volumes:
+  caddy_data:
+  caddy_config:
+  runtime:
+
+networks:
+  caddy_public:
+    external: true
